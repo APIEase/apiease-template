@@ -53,6 +53,11 @@ const systemRequestExample = readJsonFile("example-system-request.json");
     "Expected each request example to retain name only as display text.",
   );
   assertNoServerId(requestExample);
+  assert.equal(
+    typeof requestExample.description,
+    "string",
+    "Expected each request example to describe the request's resource purpose.",
+  );
 });
 
 const systemArgumentsParameter = findParameter(systemRequestExample.parameters, "arguments");

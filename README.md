@@ -21,12 +21,12 @@ The included example files are intentionally lightweight, but they now use the s
 
 Current examples:
 
-- `docs/examples/resources/requests/example-request.json`: HTTP request example covering the common top-level fields, all HTTP parameter types, and all trigger types.
-- `docs/examples/resources/requests/example-liquid-request.json`: Liquid request example showing the `liquid` field.
-- `docs/examples/resources/requests/example-system-request.json`: System request example showing the required `system` parameters.
-- `docs/examples/resources/widgets/example-widget.json`: Widget example using `handle` as the stable handle field and `name` as display text.
-- `docs/examples/resources/variables/example-variable.json`: Variable example including a stored value and the `sensitive` field.
-- `docs/examples/resources/functions/example-function.json`: Function example using a handle-first saved Function shape and reusable Liquid parameters.
+- `docs/examples/resources/requests/example-request.json`: HTTP request example covering its resource purpose, common top-level fields, all HTTP parameter types, and all trigger types.
+- `docs/examples/resources/requests/example-liquid-request.json`: Liquid request example showing its resource purpose and the `liquid` field.
+- `docs/examples/resources/requests/example-system-request.json`: System request example showing its resource purpose and required `system` parameters.
+- `docs/examples/resources/widgets/example-widget.json`: Widget example with a resource-purpose description, `handle` as its stable identifier, and `name` as display text.
+- `docs/examples/resources/variables/example-variable.json`: Variable example with a resource-purpose description, stored value, and `sensitive` field.
+- `docs/examples/resources/functions/example-function.json`: Function example with a resource-purpose description, handle-first saved Function shape, and separately described Liquid parameters.
 
 ## Managing Resources With apiease
 
@@ -66,6 +66,10 @@ apiease delete function --function-handle <function-handle>
 ```
 
 Requests, widgets, variables, and functions should use `handle` as the stable public identifier. Use `name` only as display text. Server-owned `id` values are APIEase metadata and should not be stored in template resource source files or examples.
+
+The top-level `description` explains the resource's purpose, behavior, and relevant relationships. It round-trips through canonical project files and may be an empty string. It is required for functions and optional for requests, widgets, and variables. Existing request, widget, and variable files without `description` remain valid, so do not add a default while reading or rewriting them. Include a description when it helps a reviewer understand the resource, and preserve an omitted description unless the intended edit adds one.
+
+Function parameter `description` fields explain individual inputs and remain separate from the function's top-level resource description. Keep parameter descriptions focused on the value a caller supplies; use the top-level description for what the Function does and how it relates to other resources.
 
 Create commands read the resource handle from the JSON file. Widget source files use `handle` as the stable source identifier and `name` as display text. Older widget files that use `widgetHandle` or `widgetName` should be migrated before new CLI-driven work.
 

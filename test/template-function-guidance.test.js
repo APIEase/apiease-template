@@ -34,6 +34,30 @@ assert.match(
 
 assert.match(
   templateReadme,
+  /The top-level `description` explains the resource's purpose, behavior, and relevant relationships\./,
+  "Expected README.md to explain resource-purpose descriptions.",
+);
+
+assert.match(
+  templateReadme,
+  /It is required for functions and optional for requests, widgets, and variables\./,
+  "Expected README.md to retain the additive family requirements.",
+);
+
+assert.match(
+  templateReadme,
+  /Function parameter `description` fields explain individual inputs and remain separate from the function's top-level resource description\./,
+  "Expected README.md to distinguish function parameter descriptions from the resource description.",
+);
+
+assert.match(
+  templateReadme,
+  /Existing request, widget, and variable files without `description` remain valid/,
+  "Expected README.md to preserve legacy optional-description guidance.",
+);
+
+assert.match(
+  templateReadme,
   /docs\/examples\/resources\/functions\/example-function\.json/,
   "Expected README.md to reference the bundled function example file.",
 );

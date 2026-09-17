@@ -1,6 +1,7 @@
 {
   "handle": "set-support-variables",
   "name": "Set Support Variables",
+  "description": "Sets the support contact and protected API key variables used by related resources.",
   "type": "system",
   "parameters": [
     {
@@ -13,5 +14,6 @@
       "name": "arguments",
       "value": "[{\"handle\":\"support-email\",\"name\":\"Support Email\",\"value\":\"help@example.com\"},{\"handle\":\"support-api-key\",\"name\":\"Support API Key\",\"value\":{\"mode\":\"preserve\"},\"sensitive\":true}]"
     }
-  ]
+  ],
+  "triggers": []
 }

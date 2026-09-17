@@ -1,6 +1,7 @@
 {
   "handle": "example-widget",
   "name": "Example Widget",
+  "description": "Renders a storefront status panel and updates it when the widget JavaScript loads.",
   "liquid": "<section class=\"apiease-example-widget\"><h2>Example Widget</h2><p data-role=\"status\">Loading widget...</p></section>",
   "javascript": "const statusNode = document.querySelector('.apiease-example-widget [data-role=\"status\"]');\n\nif (statusNode) {\n  statusNode.textContent = 'Widget JavaScript loaded successfully.';\n}",
   "externalJavascriptUrls": [

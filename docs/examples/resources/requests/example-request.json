@@ -1,6 +1,7 @@
 {
   "handle": "product-details-proxy",
   "name": "Product Details Proxy",
+  "description": "Retrieves enriched product details for authenticated storefront and automation consumers.",
   "type": "http",
   "method": "POST",
   "address": "https://api.example.com/products/{productHandle}/details",

@@ -27,12 +27,19 @@ assert.deepEqual(
   [
     "handle",
     "name",
+    "description",
     "liquid",
     "javascript",
     "externalJavascriptUrls",
     "disableJavascript",
   ],
   "Expected the widget example to use the canonical public widget source fields.",
+);
+
+assert.equal(
+  typeof exampleWidget.description,
+  "string",
+  "Expected the widget example to describe the widget's resource purpose.",
 );
 
 assert.doesNotMatch(

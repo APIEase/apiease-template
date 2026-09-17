@@ -48,7 +48,7 @@ assert.notEqual(
 assert.equal(
   typeof exampleFunction.description,
   "string",
-  "Expected the example function to include a description.",
+  "Expected the example function to include a resource-purpose description.",
 );
 assert.ok(
   Array.isArray(exampleFunction.parameters),
@@ -83,6 +83,11 @@ exampleFunction.parameters.forEach((parameterDefinition, parameterIndex) => {
     `Expected parameter ${parameterIndex + 1} to use a documented parameter type.`,
   );
 });
+
+assert.ok(
+  exampleFunction.parameters.every(parameter => parameter.description !== exampleFunction.description),
+  "Expected parameter descriptions to explain inputs instead of repeating the function purpose.",
+);
 
 assert.match(
   exampleFunction.liquid,

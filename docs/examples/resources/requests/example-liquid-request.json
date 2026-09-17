@@ -1,6 +1,9 @@
 {
   "handle": "inventory-message-template",
   "name": "Inventory Message Template",
+  "description": "Builds a reusable inventory notice payload through the saved message function.",
   "type": "liquid",
-  "liquid": "{% assign product_title = product.title | default: 'Unknown product' | strip %}\n{% function {\n  \"functionName\": \"Build Notice Message\",\n  \"args\": {\n    \"subject\": \"Inventory lookup prepared for\",\n    \"value\": \"{{ product_title }}\"\n  }\n} as notice_message %}\n{\n  \"message\": \"{{ notice_message.message }}\"\n}"
+  "liquid": "{% assign product_title = product.title | default: 'Unknown product' | strip %}\n{% function {\n  \"functionName\": \"Build Notice Message\",\n  \"args\": {\n    \"subject\": \"Inventory lookup prepared for\",\n    \"value\": \"{{ product_title }}\"\n  }\n} as notice_message %}\n{\n  \"message\": \"{{ notice_message.message }}\"\n}",
+  "parameters": [],
+  "triggers": []
 }

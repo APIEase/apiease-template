@@ -23,8 +23,8 @@ const exampleVariable = JSON.parse(fs.readFileSync(exampleVariablePath, "utf8"))
 
 assert.deepEqual(
   Object.keys(exampleVariable),
-  ["handle", "name", "value", "sensitive"],
-  "Expected the variable example to use the first-class handle/name/value/sensitive source shape.",
+  ["handle", "name", "description", "value", "sensitive"],
+  "Expected the variable example to include the optional resource description.",
 );
 
 assert.equal(
@@ -49,6 +49,12 @@ assert.notEqual(
   exampleVariable.name,
   exampleVariable.handle,
   "Expected the variable name to be display text rather than the stable identifier.",
+);
+
+assert.equal(
+  typeof exampleVariable.description,
+  "string",
+  "Expected the variable example to describe the variable's resource purpose.",
 );
 
 assert.deepEqual(

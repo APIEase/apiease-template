@@ -1,6 +1,7 @@
 {
   "handle": "support-api-key",
   "name": "Support API Key",
+  "description": "Stores the protected API key used by support service requests.",
   "value": { "mode": "preserve" },
   "sensitive": true
 }
