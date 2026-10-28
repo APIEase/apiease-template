@@ -103,6 +103,16 @@ apiease design-context
 
 This command provides the effective APIEase Project Design Protocol version and common-instruction digest, the common instructions, authenticated project context, local baseline and edits, and the Codex execution envelope. Follow that returned protocol instead of treating this template as an independently maintained design policy.
 
+Run the bare command normally; requirements are optional and unnecessary when the coding agent already has the task in its conversation. `design-context` reads context without applying resource changes or rewriting canonical files. It omits `projectRequirements` when none are supplied. Authentication, project identity, protocol verification, and baseline conflict checks still apply.
+
+If you want to include explicit requirements, use the supported structure:
+
+```bash
+apiease design-context --project-requirements '{"projectName":"Order status","customerRequirements":[{"id":"status","text":"Show order status."}],"confirmedDecisions":[]}'
+```
+
+The optional JSON must contain all three fields shown above; malformed JSON, invalid shapes, and explicit `null` fail. Do not infer or manufacture requirements merely to retrieve context.
+
 Edit canonical source only in the four configured directories:
 
 - `resources/requests`

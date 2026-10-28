@@ -19,5 +19,5 @@ Replace the placeholders below with your own guidance. Keep the content concrete
 ## Workflow Notes
 - Note any preferred commands, review expectations, or definition-of-done details.
 - Add links or references to additional docs if needed.
-- Record customer requirements and project-specific design constraints here, then use `apiease design-context` to obtain the shared APIEase Project Design Protocol and authenticated project context.
+- Record durable customer requirements and project-specific design constraints here when useful. Requirements already in the conversation need not be copied here or passed as CLI arguments. Use `apiease design-context` to obtain the shared APIEase Project Design Protocol and authenticated project context.
 - Keep project-specific additions compatible with the public workflows in `AGENTS.md` and `docs/shared-ongoing-ai-guidance.md`; do not redefine the shared protocol or bypass validation, explicit deletion intent, deliberate conflict handling, or protected-value rules.
