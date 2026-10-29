@@ -73,7 +73,7 @@ Function parameter `description` fields explain individual inputs and remain sep
 
 Create commands read the resource handle from the JSON file. Widget source files use `handle` as the stable source identifier and `name` as display text. Older widget files that use `widgetHandle` or `widgetName` should be migrated before new CLI-driven work.
 
-Function source files include `handle` as the target stable identifier. The current Liquid Function tag supports `functionName` or `functionId`, but not a handle-named field yet. Until that Liquid invocation contract lands, Liquid examples use `functionName` as the compatibility fallback and avoid server-owned `functionId` values.
+Function source files include `handle` as the target stable identifier. Pass that handle in the JSON Liquid Function tag's `functionId` field. Existing `functionName` calls remain supported; examples using them require the matching function name. Do not copy server-owned IDs into repository-managed examples.
 
 Prefer the handle-named `--request-handle`, `--widget-handle`, `--variable-handle`, and `--function-handle` options for read, update, and delete flows. The older `--request-id`, `--widget-id`, `--variable-name`, and `--function-id` option names remain compatibility aliases; pass resource handles through those aliases only when maintaining older scripts.
 
@@ -101,30 +101,65 @@ Before designing or editing a complete project, obtain the authenticated design 
 apiease design-context
 ```
 
-This command provides the effective APIEase Project Design Protocol version and common-instruction digest, the common instructions, authenticated project context, local baseline and edits, and the Codex execution envelope. Follow that returned protocol instead of treating this template as an independently maintained design policy.
+The default returns a compact JSON briefing with current server/local baselines,
+change counts, `readFirst` paths, and an index of verified local instruction modules.
+Read the small core and Codex envelope, then the modules applicable to the resource
+family, request type and provider involved in your task. The index states when each
+module applies. It does not infer scope from your conversation or filter resources
+based on requirements.
 
-Run the bare command normally; requirements are optional and unnecessary when the coding agent already has the task in its conversation. `design-context` reads context without applying resource changes or rewriting canonical files. It omits `projectRequirements` when none are supplied. Authentication, project identity, protocol verification, and baseline conflict checks still apply.
+The CLI refreshes these references automatically whenever you run this command.
+It checks the current authenticated server and verifies module digests before
+reusing unchanged bytes. References are isolated by server and project and stored
+beside checkout-local Git state, outside versioned source. Corrupt module bytes are
+retrieved again; unsafe cache paths or invalid responses fail. A failed or offline
+request never falls back to an old context. Canonical files, operational baselines,
+and customer guidance remain unchanged.
 
-For a compact result with local reference files, CLI versions whose `apiease --help`
-lists `--output-dir` support:
+`files.inventory` contains the complete resource inventory and dependency information;
+`files.localChanges` records local edits, deletions and protected-value selectors.
+Read relevant source files in your checkout. Retrieve current server source for an
+exact path when needed, repeating the option for additional distinct paths:
+
+```bash
+apiease design-context --resource-path resources/requests/read-product-page.json
+```
+
+The selected sources appear in `files.serverResources` and `files.context`.
+Selection changes only source delivery; whole-project validation, discovery and
+conflict checks remain intact. Every response includes fresh state. Module references
+and captured context are not an offline baseline, approval, or permission to apply.
+
+For the full JSON contract, including all current source bodies and instructions:
+
+```bash
+apiease design-context --inline
+```
+
+Scripts that consumed the former bare-command full JSON should add `--inline`.
+The compact default negotiates design-context contract version 2. Existing clients
+retain version 1 responses. Deploy the updated server before using the compact CLI;
+an older server returns an explicit version error, with `--inline` as the deliberate
+compatibility path. There is no automatic fallback.
+
+`apiease upgrade` separately maintains template-owned files. `design-context`
+maintains current server references; neither command replaces the other.
+
+For a standalone capture, use an existing parent and a new destination outside
+managed resources:
 
 ```bash
 apiease design-context --output-dir /tmp/apiease-context-1
 ```
 
-The destination must be new and its parent must exist. Use a location outside
-`resources/` and a new name for each capture. The CLI returns baselines, change
-counts, and file paths with byte counts and digests. Read `instructions.md` and
-`codex-envelope.md`, inspect `inventory.json` and `local-changes.json`, then read
-relevant entries in `server-resources.json`. `context.json` preserves the complete
-result. The instructions remain exact and verification still precedes export.
-Existing paths are never overwritten; incomplete bundles are removed on write
-failure. Relative output paths resolve from the directory where you invoke the CLI.
-
-This is a point-in-time export, not an automatic cache or approval. Retrieve fresh
-context for new work. `apiease upgrade` separately updates template-owned files;
-exporting context does not update this template or customer guidance. Search the
-consolidated product reference by topic rather than loading it in full at startup.
+This explicit mode preserves the full export contract: `context.json`,
+`instructions.md`, `codex-envelope.md`, `inventory.json`, `server-resources.json`,
+and `local-changes.json`. It returns paths, byte sizes and digests. It retrieves the
+complete instruction set and source bodies, independently of the compact cache.
+Existing paths and symlinks are refused; incomplete bundles are removed on write
+failure. Relative paths resolve from the invocation directory. Files use private
+permissions. `--inline`, `--output-dir`, and compact-only `--resource-path` cannot
+be combined. A capture remains a point-in-time reference, not authority or approval.
 
 If you want to include explicit requirements, use the supported structure:
 
