@@ -1,44 +1,47 @@
 # APIEase Agent Entry Point
 
-This public template provides project structure and workflow navigation. The
-server's verified design references own current resource-authoring rules.
-
 ## Start here
 
 1. Read `CUSTOM_AGENT_GUIDANCE.md` and `CUSTOM_README.md` for customer intent.
-2. Read the project workflow in `docs/shared-ongoing-ai-guidance.md`.
-3. Run `apiease design-context` in an initialized checkout. Read its `readFirst`
-   files, then the applicable modules in `files.instructionIndex`. Select by actual
-   resource family, request type and provider; do not load unrelated modules.
-4. Inspect inventory and local changes. Read the relevant canonical files and
-   dependency sources. Search `docs/knowledgebase/apiEaseDocsConsolidated.md` only
-   for additional product topics needed by the task; do not read it all at startup.
+2. Read `docs/shared-ongoing-ai-guidance.md` for the project workflow.
+3. Read the installed `docs/resource-instructions/README.md` reading index, its
+   required core and adapter envelope, then applicable resource-specific modules.
+4. Inspect relevant resource JSON and dependencies. Search
+   `docs/knowledgebase/apiEaseDocsConsolidated.md` by topic when needed; do not load
+   the whole product reference at startup.
 
-The user's conversation normally supplies the task. Do not invent or restate
-requirements just to call `design-context`; `--project-requirements` is optional.
-If this CLI does not list `--inline` in `apiease --help`, update it for the compact
-reference workflow. An older server can be used explicitly with `--inline`.
+Resource instructions are developer-written Markdown copied by a script from
+APIEase's authoritative bundle. `init` and `upgrade` install them locally.
+No live service is needed to read them. `design-context` optionally reports current
+project status; it is not an instruction-download step.
 
-## Ownership
+## Ownership and workflow
 
-- Edit resource source under the configured directories in `apiease.config.js`.
-  The server owns live resources; the CLI owns bindings, baselines and cache files.
-- `AGENTS.md`, `README.md`, and shared workflow guidance are template-owned.
-  `apiease upgrade` maintains them independently of protocol refresh.
-- The `CUSTOM_*` files are customer-owned. Preserve them and existing local edits.
-- `design-context` refreshes CLI-owned references after authenticating to the
-  current server. Never edit, commit, or copy those references into custom guidance.
+- Edit canonical resource JSON in the configured `resources/*` directories.
+  Run `apiease validate`, then apply only when authorized by the customer.
+- Keep customer requirements in the conversation and project decisions in
+  `CUSTOM_*` files. Preserve customer guidance and existing resource edits.
+- Project instructions and `docs/resource-instructions/` are template-managed.
+  Preview `apiease upgrade --dry-run` when notified. Conflicts offer overwrite or
+  ignore; use `--on-conflict overwrite|ignore` explicitly in noninteractive work.
+  Ignore preserves the instruction set and leaves the upgrade pending.
+- The server owns live resources; the CLI owns operational bindings and the
+  synchronization baseline. A baseline check detects intervening server changes,
+  separately from local edits. Git history grants no mutation authority.
 - Do not hand-edit operational metadata or infer deletion from missing files.
-  Follow the rename, explicit deletion, validation and apply workflow in `README.md`.
-- Keep this template small. Do not add frameworks or unrelated scaffolding.
+  Follow `README.md` for rename, explicit deletion, validation, and apply.
+- Keep this template small; do not add unrelated frameworks or scaffolding.
 
 ## Maintaining this template
 
-Keep shared resource semantics in the server protocol, product documentation in
-`../apiease-docs`, and project-specific decisions in `CUSTOM_*`. Do not add another
-copy of protocol instructions or Liquid runtime examples here.
+Change resource instructions in `../apiease/contracts/project-design/v1/`, then
+run `npm run instructions:pull-local` here. `npm run validate` runs tests and a
+read-only freshness check. Set `APIEASE_SOURCE_DIRECTORY` or pass `--source` to
+select an authoritative source checkout. Missing source fails validation.
+These are template-maintenance commands; store projects use `apiease validate`
+and need no sibling source checkout.
 
-Never edit `apiEaseDocsConsolidated.md` directly. After public source changes,
+Never edit `apiEaseDocsConsolidated.md` directly. After public article changes,
 run `knowledge:build` and `knowledge:check` in `../apiease-docs/docs`, then
 `knowledge:pull-local` and `knowledge:pull-local -- --check` in `apiease`,
 `apiease-cli`, and this repository. Report failed or unavailable refreshes.

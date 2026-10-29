@@ -1,0 +1,84 @@
+{
+  "formatVersion": 1,
+  "protocolVersion": "1.0.0",
+  "sourceManifestIdentity": "sha256:81f22f4a8449b28d24b613468cf6c8167ab313da534a5075a30e266697bec810",
+  "moduleSetIdentity": "sha256:88d4007462e9834c71d63fe4ad097ac362d5fc97bdecb3c42f3cb8ab5c5f8032",
+  "readingGuide": [
+    {
+      "id": "codexDirectSourceAdapter",
+      "required": true,
+      "when": "Always: local authoring workflow.",
+      "path": "codex-direct-source-adapter.md"
+    },
+    {
+      "id": "sourceAuthoring",
+      "required": true,
+      "when": "Always: shared canonical source rules.",
+      "path": "source-authoring.md"
+    },
+    {
+      "id": "requestConstruction",
+      "required": false,
+      "when": "When creating or updating any request.",
+      "path": "request-construction.md"
+    },
+    {
+      "id": "requestInvocation",
+      "required": false,
+      "when": "When authoring HTTP helpers or any saved-request caller.",
+      "path": "request-invocation.md"
+    },
+    {
+      "id": "requestShopify",
+      "required": false,
+      "when": "When a request uses Shopify Admin GraphQL.",
+      "path": "request-shopify.md"
+    },
+    {
+      "id": "requestLiquid",
+      "required": false,
+      "when": "When authoring Liquid request workflows.",
+      "path": "request-liquid.md"
+    },
+    {
+      "id": "requestLiquidExamples",
+      "required": false,
+      "when": "Reference examples for the Liquid syntax or behavior being authored; read the relevant section.",
+      "path": "request-liquid-examples.md"
+    },
+    {
+      "id": "widgetConstruction",
+      "required": false,
+      "when": "When creating or updating a widget.",
+      "path": "widget-construction.md"
+    },
+    {
+      "id": "variableConstruction",
+      "required": false,
+      "when": "When creating or updating a variable.",
+      "path": "variable-construction.md"
+    },
+    {
+      "id": "functionConstruction",
+      "required": false,
+      "when": "When creating or updating a function.",
+      "path": "function-construction.md"
+    }
+  ],
+  "envelope": "codex-envelope.md",
+  "files": [
+    "README.md",
+    "codex-direct-source-adapter.md",
+    "codex-envelope.md",
+    "function-construction.md",
+    "manifest.json",
+    "request-construction.md",
+    "request-invocation.md",
+    "request-liquid-examples.md",
+    "request-liquid.md",
+    "request-shopify.md",
+    "source-authoring.md",
+    "variable-construction.md",
+    "widget-construction.md"
+  ]
+}

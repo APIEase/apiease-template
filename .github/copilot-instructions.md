@@ -1,5 +1,6 @@
 # Copilot Instructions
 
-Read `AGENTS.md`, `docs/knowledgebase/apiEaseDocsConsolidated.md`, `CUSTOM_AGENT_GUIDANCE.md`, and `CUSTOM_README.md` before making changes.
-
-This repository is a minimal APIEase template, not a prebuilt application. Use the bundled knowledge base to understand APIEase concepts and configuration, then keep changes focused on `apiease.config.js` and `resources/`. Avoid adding build systems, frameworks, or heavy scaffolding unless the user explicitly requests them.
+Start with `AGENTS.md` and follow its local reading order: customer guidance,
+project workflow, then `docs/resource-instructions/README.md` and its required and
+applicable modules. Search the bundled product documentation by topic as needed.
+Keep changes focused on the requested resources and preserve `CUSTOM_*` decisions.

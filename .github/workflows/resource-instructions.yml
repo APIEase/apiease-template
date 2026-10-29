@@ -1,0 +1,38 @@
+name: Resource instructions
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: APIEase source branch or commit to verify
+        default: main
+        required: true
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: github.repository == 'APIEase/apiease-template' || github.repository == 'kevinstl-org/apiease-template'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: apiease-template
+      - uses: actions/checkout@v4
+        with:
+          repository: APIEase/apiease
+          ref: ${{ inputs.source_ref || 'main' }}
+          token: ${{ secrets.APIEASE_SOURCE_READ_TOKEN }}
+          path: apiease
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install source dependencies for shared contract tests
+        working-directory: apiease
+        run: npm ci --ignore-scripts
+      - name: Test and verify committed resource instructions
+        working-directory: apiease-template
+        env:
+          APIEASE_SOURCE_DIRECTORY: ${{ github.workspace }}/apiease
+        run: ./.codex/run_test_suite.sh

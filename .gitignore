@@ -10,4 +10,5 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .idea/
-.codex/
+.codex/*
+!.codex/run_test_suite.sh

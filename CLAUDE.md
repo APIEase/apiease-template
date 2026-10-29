@@ -1,5 +1,6 @@
 # Claude Guidance
 
-Start with `AGENTS.md`, then read `docs/knowledgebase/apiEaseDocsConsolidated.md`, `CUSTOM_AGENT_GUIDANCE.md`, and `CUSTOM_README.md`.
-
-This repository is the minimal starter template used by `apiease-cli` for new APIEase projects. Use the bundled knowledge base to understand how APIEase works, then prefer small, template-friendly changes centered on `apiease.config.js` and the `resources/` directories. Do not add unrelated framework structure unless the user explicitly asks for it.
+Start with `AGENTS.md` and follow its local reading order: customer guidance,
+project workflow, then `docs/resource-instructions/README.md` and its required and
+applicable modules. Search the bundled product documentation by topic as needed.
+Keep changes focused on the requested resources and preserve `CUSTOM_*` decisions.
