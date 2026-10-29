@@ -6,14 +6,13 @@ This repository is the public starter template used by general `apiease-cli` use
 Agents working in this repository should optimize for clarity, minimalism, and template suitability. This is not an application repository with an established runtime, test suite, or framework stack.
 
 ## Instruction Order
-Before making changes, read these files in this order:
+Before making changes, read the small project entry points, then select references for the task:
 
 1. `AGENTS.md`
-2. `docs/shared-ongoing-ai-guidance.md`
-3. `docs/knowledgebase/apiEaseDocsConsolidated.md`
-4. `CUSTOM_AGENT_GUIDANCE.md`
-5. `CUSTOM_README.md`
-6. `README.md`
+2. `CUSTOM_AGENT_GUIDANCE.md` and `CUSTOM_README.md` for project-specific intent.
+3. The workflow and applicable resource sections in `docs/shared-ongoing-ai-guidance.md`.
+4. Relevant command sections in `README.md`.
+5. Search `docs/knowledgebase/apiEaseDocsConsolidated.md` for the task's product topics and read those sections. Do not load the entire consolidated reference as a startup requirement.
 
 `AGENTS.md`, `README.md`, and `docs/shared-ongoing-ai-guidance.md` are template-owned defaults. `CUSTOM_AGENT_GUIDANCE.md` and `CUSTOM_README.md` are the intended places for project-specific customization.
 
@@ -23,7 +22,7 @@ If the custom files contain project-specific instructions, treat them as the use
 
 ## What To Do
 - Help users create or modify APIEase resource files and configuration.
-- For repository-scale Project Design, start with `apiease init` or `apiease init --from-existing-resources`, refresh from the stable Mongo snapshot with `apiease pull`, then run `apiease design-context` without arguments. Requirements are optional when the task is already in the conversation; do not invent or infer them to retrieve context. This command reads context without applying changes or rewriting canonical files. Follow the returned versioned APIEase Project Design Protocol instructions, verified common-instruction digest, authenticated project context, and Codex execution envelope.
+- For Project Design, initialize or deliberately refresh the baseline with the documented `init`/`pull` workflow, then run `apiease design-context`. Requirements are optional when the task is already in the conversation; do not invent or infer them. If `apiease --help` lists `--output-dir`, use a new directory outside the managed resource tree for a compact briefing and local reference files. Read its exact verified instructions and Codex envelope, inspect inventory and local changes, and retrieve relevant server source entries as needed. The bare command returns the same context inline. Neither mode applies changes or rewrites canonical files.
 - Treat files under the configured resource directories as deterministic encodings of Canonical Resource Source objects. Mongo is live authority; local files are the Codex Project Designer's editing surface, not a separate resource authority.
 - After editing, run `apiease validate`. Use `apiease apply` for an explicit personal immediate apply, or `apiease apply --require-approval` to submit the exact change set for deferred review as a Project Proposal.
 - Use `apiease rename <resource-type> <old-handle> <new-handle>` for a bound resource rename. Express deletion only with the resource-family `delete/<handle>.json` workflow described in `README.md`; never infer deletion from an absent file.
@@ -52,7 +51,8 @@ If the custom files contain project-specific instructions, treat them as the use
 ## Guardrails
 - Do not add unrelated frameworks, build tooling, or app scaffolding by default.
 - Do not assume a package manager, runtime entrypoint, or deployment target unless the user adds one.
-- Do not guess at APIEase behavior when the knowledge base answers it; consult `docs/knowledgebase/apiEaseDocsConsolidated.md` first.
+- Do not guess at APIEase behavior when the knowledge base answers it; search and read the relevant sections of `docs/knowledgebase/apiEaseDocsConsolidated.md` first.
+- `apiease upgrade` updates template-owned files. `design-context` retrieves current server context; its optional file bundle is a point-in-time reference, not a template upgrade, reusable authority, or approval. Do not copy generated context into customer guidance or resource files.
 - Update the public docs source for product documentation changes, or update `docs/shared-ongoing-ai-guidance.md` for reusable agent lessons. In this maintainer workspace, the local docs source is usually `../apiease-docs`.
 - After updating public documentation in the maintainer workspace, run `npm run knowledge:build` and `npm run knowledge:check` from `../apiease-docs/docs`, then `npm run knowledge:pull-local` from each available consumer root: `../apiease`, this repository, and `../apiease-cli`. Verify each import with `npm run knowledge:pull-local -- --check`. This scripted refresh is the preferred follow-up and does not require a separate user request. Report unavailable repositories or failed commands; never compensate by directly editing a consolidated file.
 - Apply shared implementation constraints from `docs/shared-ongoing-ai-guidance.md` when they are relevant, especially for APIEase Liquid behavior not covered in the main knowledge base.

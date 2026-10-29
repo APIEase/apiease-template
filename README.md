@@ -105,6 +105,27 @@ This command provides the effective APIEase Project Design Protocol version and 
 
 Run the bare command normally; requirements are optional and unnecessary when the coding agent already has the task in its conversation. `design-context` reads context without applying resource changes or rewriting canonical files. It omits `projectRequirements` when none are supplied. Authentication, project identity, protocol verification, and baseline conflict checks still apply.
 
+For a compact result with local reference files, CLI versions whose `apiease --help`
+lists `--output-dir` support:
+
+```bash
+apiease design-context --output-dir /tmp/apiease-context-1
+```
+
+The destination must be new and its parent must exist. Use a location outside
+`resources/` and a new name for each capture. The CLI returns baselines, change
+counts, and file paths with byte counts and digests. Read `instructions.md` and
+`codex-envelope.md`, inspect `inventory.json` and `local-changes.json`, then read
+relevant entries in `server-resources.json`. `context.json` preserves the complete
+result. The instructions remain exact and verification still precedes export.
+Existing paths are never overwritten; incomplete bundles are removed on write
+failure. Relative output paths resolve from the directory where you invoke the CLI.
+
+This is a point-in-time export, not an automatic cache or approval. Retrieve fresh
+context for new work. `apiease upgrade` separately updates template-owned files;
+exporting context does not update this template or customer guidance. Search the
+consolidated product reference by topic rather than loading it in full at startup.
+
 If you want to include explicit requirements, use the supported structure:
 
 ```bash
