@@ -3,8 +3,11 @@
   "private": true,
   "scripts": {
     "test": "node --test",
+    "test:ci": "node --test test/*.test.js",
     "instructions:pull-local": "node scripts/instructions/pullResourceInstructions.js",
+    "instructions:check": "node scripts/instructions/checkResourceInstructions.js",
     "validate": "npm test && npm run instructions:pull-local -- --check",
+    "validate:ci": "npm run test:ci && npm run instructions:check",
     "knowledge:pull-local": "node scripts/knowledgebase/pullApiEaseDocsKnowledgeBase.js"
   }
 }

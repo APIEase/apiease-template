@@ -308,7 +308,6 @@ Maintainers synchronize instruction copies with:
 
 ```bash
 npm run instructions:pull-local
-npm run instructions:pull-local -- --check
 npm run validate
 ```
 
@@ -321,9 +320,28 @@ writes nothing and fails for missing, changed, or obsolete owned files and selec
 metadata. Missing source is an error. These are template-maintenance commands;
 customers use `apiease validate` and need no sibling source checkout.
 
-CI verifies source changes in APIEase and template changes here against explicit
-checkouts. The template repository needs `APIEASE_SOURCE_READ_TOKEN` with read
-access to private APIEase source. Manual workflows accept `source_ref` or
-`template_ref` for coordinated changes. Land source and copied instruction updates
-together; checks against `main` detect remaining mismatches. The maintenance workflow
-is disabled in customer repositories created from this template.
+For the current single-developer workflow:
+
+1. Make sure your local APIEase source checkout contains the changes you want to
+   distribute. If those changes were made elsewhere, update that checkout first;
+   the copy command does not fetch Git updates.
+2. Run `npm run instructions:pull-local`. It verifies and copies the source
+   instructions and records a generated content fingerprint (`snapshotIdentity`)
+   in the copied manifest. The fingerprint covers the instruction files, envelope,
+   reading index, and manifest metadata. `protocolVersion` describes the format;
+   it is not an instruction content revision.
+3. Run `npm run validate` before pushing. This runs all tests, including the shared
+   source contract tests in `test/source/`, and compares the copied files with the
+   local source without changing either checkout. Commit the refreshed files and
+   manifest together.
+4. GitHub runs `npm run validate:ci`: standalone tests in `test/*.test.js` and the
+   same fingerprint check available locally as `npm run instructions:check`.
+   It needs only this repository, with no private source checkout, dependency
+   installation, or extra GitHub secret.
+
+CI confirms that the committed files match their recorded snapshot. It cannot
+detect newer instructions that have not been copied from source; the local
+freshness check is responsible for that. A missing source checkout still fails
+local validation. The source repository's own workflow can also compare its source
+with the public template. The template maintenance workflow is disabled in customer
+repositories created from this template.

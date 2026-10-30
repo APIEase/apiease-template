@@ -41,6 +41,14 @@ select an authoritative source checkout. Missing source fails validation.
 These are template-maintenance commands; store projects use `apiease validate`
 and need no sibling source checkout.
 
+For the single-developer workflow, refresh from the current local source and run
+`npm run validate` before pushing. Refreshing copies files; it does not fetch Git
+updates. CI runs `npm run validate:ci` using only this repository: standalone tests
+and a generated instruction snapshot fingerprint. CI checks the committed copy's
+integrity; local validation checks freshness against source. Source-dependent tests
+live in `test/source/` and remain part of local validation. No cross-repository
+Actions secret is required.
+
 Never edit `apiEaseDocsConsolidated.md` directly. After public article changes,
 run `knowledge:build` and `knowledge:check` in `../apiease-docs/docs`, then
 `knowledge:pull-local` and `knowledge:pull-local -- --check` in `apiease`,

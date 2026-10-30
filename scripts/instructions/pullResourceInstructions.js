@@ -1,6 +1,7 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
+const {calculateSnapshotIdentity, requireOwnedPath} = require('./checkResourceInstructions.js');
 
 const TEMPLATE_DIRECTORY = path.resolve(__dirname, '../..');
 const TARGET_DIRECTORY = path.join(TEMPLATE_DIRECTORY, 'docs/resource-instructions');
@@ -39,11 +40,14 @@ async function buildInstructionFiles(sourceDirectory) {
   if (output.size !== readingGuide.length) throw new Error('Instruction filenames must be unique.');
   output.set('codex-envelope.md', protocol.adapterEnvelope);
   output.set('README.md', buildReadingIndex(readingGuide));
-  output.set('manifest.json', `${JSON.stringify({
+  const manifest = {
     formatVersion: 1, protocolVersion: protocol.protocolVersion,
     sourceManifestIdentity: protocol.manifestIdentity, moduleSetIdentity: protocol.moduleSetIdentity,
     readingGuide, envelope: 'codex-envelope.md', files: [...output.keys(), 'manifest.json'].sort(),
-  }, null, 2)}\n`);
+  };
+  output.set('manifest.json', `${JSON.stringify(manifest, null, 2)}\n`);
+  manifest.snapshotIdentity = calculateSnapshotIdentity(output);
+  output.set('manifest.json', `${JSON.stringify(manifest, null, 2)}\n`);
   return output;
 }
 
@@ -64,19 +68,6 @@ async function readPreviousManifest(targetDirectory) {
   if (!Array.isArray(manifest.files)) throw new Error('Invalid installed instruction manifest.');
   for (const name of manifest.files) await requireOwnedPath(targetDirectory, name);
   return manifest;
-}
-
-async function requireOwnedPath(targetDirectory, name) {
-  if (typeof name !== 'string' || (name !== 'README.md' && !/^[a-z][a-z0-9-]*\.(md|json)$/.test(name))) {
-    throw new Error(`Invalid owned instruction path: ${name}`);
-  }
-  for (const filePath of [targetDirectory, path.join(targetDirectory, name)]) {
-    const stats = await fs.lstat(filePath).catch(error => {
-      if (error.code !== 'ENOENT') throw error;
-      return null;
-    });
-    if (stats?.isSymbolicLink()) throw new Error(`Instruction path is a symlink: ${filePath}`);
-  }
 }
 
 async function readOptionalFile(targetDirectory, name) {

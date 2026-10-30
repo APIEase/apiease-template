@@ -6,7 +6,7 @@ const path = require("node:path");
 const {test} = require("node:test");
 const {pathToFileURL} = require("node:url");
 
-const templateRoot = path.resolve(__dirname, "..");
+const templateRoot = path.resolve(__dirname, "../..");
 const apieaseRoot = process.env.APIEASE_SOURCE_DIRECTORY || path.resolve(templateRoot, "..", "apiease");
 let sharedCanonicalCodecPromise;
 
