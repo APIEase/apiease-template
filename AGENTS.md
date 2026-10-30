@@ -19,6 +19,12 @@ project status; it is not an instruction-download step.
 
 - Edit canonical resource JSON in the configured `resources/*` directories.
   Run `apiease validate`, then apply only when authorized by the customer.
+- For a requested API environment, pass `--environment <name>` after the command
+  on each invocation. It selects `~/.apiease/.env.<name>` without reading or
+  changing `~/.apiease/environment`; the selected file must exist and be readable.
+  Explicit connection flags and process values still take precedence. This does
+  not retarget stored project identity or relax conflict checks. Follow README's
+  connection settings for supported commands and preserve operational metadata.
 - Keep customer requirements in the conversation and project decisions in
   `CUSTOM_*` files. Preserve customer guidance and existing resource edits.
 - Project instructions and `docs/resource-instructions/` are template-managed.

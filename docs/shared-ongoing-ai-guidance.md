@@ -25,6 +25,22 @@ conversation and durable project decisions in `CUSTOM_*` files.
    deferred review. Git diffs present edits; they grant no mutation authority.
 6. When notified, preview `apiease upgrade --dry-run` and upgrade template files.
 
+To use a named API connection for one invocation, append `--environment <name>`
+after the command, for example `apiease validate --environment staging --json`.
+Use the same selection for initialization with `--from-existing-resources`,
+`pull`, `design-context`, validation, and authorized apply. Direct resource
+`create`, `read`, `update`, and `delete` also support it. Plain template-only
+`init`, `upgrade`, and local `rename` do not use API connection settings.
+
+The flag reads `~/.apiease/.env.<name>` without reading or changing
+`~/.apiease/environment`. Repeat it for each invocation. Explicit connection flags
+take precedence over process variables, which take precedence over the selected
+file. That file must exist and be readable even if the other sources supply all
+settings; an invalid selection fails without falling back to the default.
+Omitting the flag keeps the existing default resolution. See README's connection
+settings for name rules and setup. The option does not retarget stored project
+identity or change bindings, baselines, conflict checks, or template upgrades.
+
 Use `apiease design-context` for current inventory or a baseline check when needed.
 Select current server source with `--resource-path`. It does not install instructions
 or write operational state. Reconcile changed baselines deliberately before apply.

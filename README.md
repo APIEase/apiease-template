@@ -39,6 +39,59 @@ Supported resource types:
 - `variable`
 - `function`
 
+### Connection settings and environments
+
+API commands resolve each connection setting independently, using the first
+non-empty value in this order:
+
+1. Explicit `--api-key`, `--base-url`, or `--shop-domain` flags.
+2. Corresponding process variables: `APIEASE_API_KEY`, `APIEASE_BASE_URL`, or
+   `APIEASE_SHOP_DOMAIN`.
+3. Those variables in the selected `~/.apiease/.env.<name>` file.
+
+For example, configure `~/.apiease/.env.staging` outside the project with your
+staging connection values:
+
+```dotenv
+APIEASE_API_KEY=your-staging-api-key
+APIEASE_BASE_URL=https://your-staging-apiease-host.example.com
+APIEASE_SHOP_DOMAIN=your-staging-shop.myshopify.com
+```
+
+Select that file for one command with `--environment staging`:
+
+```bash
+apiease read request --request-handle my-request --environment staging
+```
+
+Place `--environment <name>` after the command, alongside other options; there is
+no `--env` alias. The flag reads the named file directly without reading or changing
+`~/.apiease/environment`; that declaration file need not exist. It selects the
+fallback file and does not override explicit connection flags or process values.
+For example, an exported `APIEASE_SHOP_DOMAIN` still takes precedence over the
+shop domain in `.env.staging`.
+
+An explicit name must start with a letter or digit and contain only letters,
+digits, dots, underscores, or hyphens, such as `staging` or `qa-us_2.1`. Empty names
+and paths are invalid. The selected file must exist and be readable even when
+flags or process values supply all three settings. Invalid selections and missing
+or unreadable files fail without falling back to the default environment.
+
+Without the flag, the existing default remains: `~/.apiease/environment` selects
+the fallback file when settings are missing. If flags and process values already
+supply all three settings, home configuration is not needed.
+
+The flag is supported by `create`, `read`, `update`, and `delete` for all supported
+resource types, plus `pull`, `design-context`, `validate`, `apply`, and
+`init --from-existing-resources`. Plain template-only `init`, `upgrade`, and local
+`rename` do not use API connection settings.
+
+Environment selection lasts for one invocation. Repeat the flag on each API
+command that needs it. It does not retarget an existing checkout's stored project
+identity, create persistent environment metadata, or change identity and conflict
+checks. Use a checkout initialized for the intended project; preserve its bindings
+and baselines.
+
 ### Direct resource CRUD
 
 Common direct commands:
@@ -94,6 +147,21 @@ cd my-project
 ```
 
 Initialization uses the fixed public `APIEase/apiease-template` checkout. The `--from-existing-resources` mode retrieves and verifies a stable canonical snapshot from Mongo, the live resource authority, then overlays its canonical files. Run `apiease pull` later to retrieve the latest stable Mongo snapshot. A normal pull refuses to overwrite direct managed-file edits; use `apiease pull --force` only when you deliberately intend to discard those edits. Pull never merges local and server source automatically.
+
+To initialize and work with a staging project while keeping your default
+environment selection, use the [connection settings](#connection-settings-and-environments)
+above and repeat the environment option:
+
+```bash
+apiease init staging-project --from-existing-resources --environment staging
+cd staging-project
+apiease design-context --environment staging
+apiease validate --environment staging --json
+```
+
+For later synchronization use `apiease pull --environment staging`. When apply is
+authorized, use `apiease apply --environment staging`, adding `--require-approval`
+if this project requires deferred review.
 
 Resource instructions are developer-written Markdown explaining how to create and
 edit requests, widgets, variables, and functions. `apiease init` installs a checked
