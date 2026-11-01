@@ -752,6 +752,16 @@ Most agent-driven APIEase work should follow this path:
 
 Apex is the assistant inside APIEase. It can design changes to requests, widgets, Variables, and Functions during a conversation. Apex prepares a proposal first; you review the exact resource operations before approving or rejecting it.
 
+Apex generates proposals with required structural validation by default. The two **Optional verification** checkboxes start unchecked and are remembered for the conversation:
+
+- **Run simulated behavior tests** checks generated behavior using test inputs and simulated API responses. HTTP and Liquid requests are supported. Unsupported resources and missing test coverage are reported separately; they are not passes.
+- **Run AI acceptance review** defines acceptance criteria and reviews artifacts and the complete project against them.
+
+Select either option, both, or neither before sending your next message. Changing a checkbox does not start generation or change work already in progress. Simulated tests use synthetic inputs and mocked responses; they do not run your live integration.
+
+You can also choose **Run simulated behavior tests** or **Run AI acceptance review** in the proposal review. These actions check that exact proposal without regenerating source. If the results call for a correction, choose **Request changes** to prepare a revised proposal. Verification results remain separate from your approval and from applying resources. Checks marked skipped, pending, unsupported, failed, or interrupted do not establish a pass.
+
+
 The review shows description changes alongside the resource operations. Approval applies the exact reviewed proposal. Asking for changes rejects that immutable proposal and starts a new revision; it does not silently edit the proposal you already reviewed. Rejection, cancellation, or a failed apply leaves live resources unchanged.
 
 For a request that could change real data, Apex may initially configure request-specific controls such as a dry-run option or a disabled `ALLOW_*` Variable when that pattern fits the integration. Inspect and test the saved request before enabling live behavior. An applied proposal confirms the APIEase resource change; it does not prove that an external integration works or that the broader business objective is complete.
