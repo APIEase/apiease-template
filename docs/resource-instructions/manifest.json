@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "protocolVersion": "1.0.0",
-  "sourceManifestIdentity": "sha256:81f22f4a8449b28d24b613468cf6c8167ab313da534a5075a30e266697bec810",
-  "moduleSetIdentity": "sha256:88d4007462e9834c71d63fe4ad097ac362d5fc97bdecb3c42f3cb8ab5c5f8032",
+  "sourceManifestIdentity": "sha256:fbc864f94e60cd3033589dbb3f0322873b2317c7429b4e08b16d0c36249d3337",
+  "moduleSetIdentity": "sha256:e0fd258810ccb1df8c9e7c685624b40be7485a2d5ccd32a34775b02b5359caae",
   "readingGuide": [
     {
       "id": "codexDirectSourceAdapter",
@@ -81,5 +81,5 @@
     "variable-construction.md",
     "widget-construction.md"
   ],
-  "snapshotIdentity": "sha256:d7f7661d10e2b0e6ef50b7b334215721d717b1439bb4c306cc9a7f145fd1584f"
+  "snapshotIdentity": "sha256:174e2f4d4b7a986fc3965fa295f479dbbcd159cc9f0bbbb0f2d11a59a620c665"
 }
